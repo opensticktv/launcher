@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openstick.tv/schema/app-manifest.schema.json",
+  "title": "OpenStick app manifest",
+  "type": "object",
+  "required": ["id", "name", "icon", "launch", "input_mode"],
+  "properties": {
+    "id": { "type": "string", "description": "Reverse-DNS id, matches the Flatpak id", "examples": ["tv.openstick.app.netflix"] },
+    "name": { "type": "string" },
+    "icon": { "type": "string", "description": "Path or URL to a square PNG or SVG" },
+    "kind": { "enum": ["native", "web", "receiver"] },
+    "launch": {
+      "type": "object",
+      "properties": {
+        "command": { "type": "string", "description": "For native apps: command line" },
+        "url": { "type": "string", "format": "uri", "description": "For web apps: start URL opened in Chrome kiosk" }
+      }
+    },
+    "input_mode": { "enum": ["dpad", "pointer", "keyboard"] },
+    "resolution_ceiling": { "type": "string", "examples": ["SD", "720p", "1080p", "4K"] },
+    "ceiling_reason": { "type": "string", "description": "One or two sentences shown on the setup page" },
+    "permissions": {
+      "type": "array",
+      "items": { "enum": ["network", "usb", "mic", "bluetooth"] },
+      "uniqueItems": true
+    },
+    "requires_chrome": { "type": "boolean", "default": false }
+  },
+  "additionalProperties": false
+}
